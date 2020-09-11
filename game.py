@@ -1,6 +1,6 @@
 from exceptions import GameOver, EnemyDown
 from models import Enemy, Player, Inputs
-from settings import LIVES, V_SCORE, GOODBYE_STRING, ENEMY_DOWN_STRING, LIVES_STRING
+from settings import LIVES, ENEMY_DOWN_SCORE, GOODBYE_STRING, ENEMY_DOWN_STRING, LIVES_STRING
 
 
 def play():
@@ -23,7 +23,7 @@ def play():
         except EnemyDown:
             level += 1
             enemy = Enemy(level)
-            player.score += V_SCORE
+            player.score += ENEMY_DOWN_SCORE
             print(ENEMY_DOWN_STRING, player.score)
             print(LIVES_STRING, player.lives)
             continue

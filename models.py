@@ -1,8 +1,14 @@
-from sys import exit
+from enum import Enum
 from random import randint
 from exceptions import EnemyDown, GameOver
-from settings import WELCOME_STRING, START_STRING, START_EXIT_KEY_WORDS, GOODBYE_STRING, SELECT_PLAYER_ATTACK as A
+from settings import WELCOME_STRING, START_STRING, START_EXIT_KEY_WORDS, SELECT_PLAYER_ATTACK as A
 from settings import WRONG_SELECT, SELECT_STRiNG, ATTACK_STRING, DEFENSE_STRING, GAME_OVER_STRING, LIVES_STRING
+
+
+class Attacks(Enum):
+    robber = 1, 'Robber'
+    warrior = 2, 'Warrior'
+    wizard = 3, 'Wizard'
 
 
 class Enemy:
@@ -64,7 +70,7 @@ class Player:
         if not self.lives:
             print(GAME_OVER_STRING, self.score)
             print(LIVES_STRING, self.lives)
-            raise GameOver
+            raise GameOver(self)
 
     def attack(self, enemy_obj):
         """- получает ввод от пользователя(1, 2, 3), выбирает
@@ -102,9 +108,8 @@ class Inputs:
         i = ''
         while i.upper() not in [x.upper() for x in START_EXIT_KEY_WORDS.values()]:
             i = input(string).strip()
-        if i == START_EXIT_KEY_WORDS['exit']:
-            print(GOODBYE_STRING)
-            exit()
+        if i.upper() == START_EXIT_KEY_WORDS['exit']:
+            raise KeyboardInterrupt
 
     @staticmethod
     def select_player_attack(string=SELECT_STRiNG.format(*A.values())):

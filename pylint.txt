@@ -1,0 +1,32 @@
+************* Module exceptions
+exceptions.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+exceptions.py:4:0: C0115: Missing class docstring (missing-class-docstring)
+exceptions.py:5:4: W0231: __init__ method from base class 'Exception' is not called (super-init-not-called)
+exceptions.py:7:8: C0415: Import outside toplevel (models) (import-outside-toplevel)
+exceptions.py:10:42: C0103: Variable name "f" doesn't conform to snake_case naming style (invalid-name)
+exceptions.py:12:4: W0107: Unnecessary pass statement (unnecessary-pass)
+exceptions.py:15:0: C0115: Missing class docstring (missing-class-docstring)
+************* Module game
+game.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+game.py:43:4: W0107: Unnecessary pass statement (unnecessary-pass)
+************* Module models
+models.py:114:0: C0301: Line too long (103/100) (line-too-long)
+models.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+models.py:8:0: C0115: Missing class docstring (missing-class-docstring)
+models.py:35:0: C0115: Missing class docstring (missing-class-docstring)
+models.py:42:8: W0107: Unnecessary pass statement (unnecessary-pass)
+models.py:56:11: R0916: Too many boolean expressions in if statement (6/5) (too-many-boolean-expressions)
+models.py:61:11: R0916: Too many boolean expressions in if statement (6/5) (too-many-boolean-expressions)
+models.py:45:4: R1710: Either all return statements in a function should return an expression, or none of them should. (inconsistent-return-statements)
+models.py:100:0: C0115: Missing class docstring (missing-class-docstring)
+models.py:103:4: C0116: Missing function or method docstring (missing-function-docstring)
+models.py:107:4: C0116: Missing function or method docstring (missing-function-docstring)
+models.py:117:4: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module settings
+settings.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+settings.py:8:0: C0103: Constant name "SELECT_STRiNG" doesn't conform to UPPER_CASE naming style (invalid-name)
+settings.py:1:0: R0401: Cyclic import (exceptions -> models) (cyclic-import)
+
+------------------------------------------------------------------
+Your code has been rated at 8.10/10 (previous run: 8.10/10, +0.00)
+

@@ -1,14 +1,14 @@
 from enum import Enum
 from random import randint
 from exceptions import EnemyDown, GameOver
-from settings import WELCOME_STRING, START_STRING, START_EXIT_KEY_WORDS, SELECT_PLAYER_ATTACK as A
-from settings import WRONG_SELECT, SELECT_STRiNG, ATTACK_STRING, DEFENSE_STRING, GAME_OVER_STRING, LIVES_STRING
+from settings import WELCOME_STRING, START_STRING, START_EXIT_KEY_WORDS, WRONG_SELECT, SELECT_STRiNG
+from settings import ATTACK_STRING, DEFENSE_STRING, GAME_OVER_STRING, LIVES_STRING
 
 
 class Attacks(Enum):
-    robber = 1, 'Robber'
-    warrior = 2, 'Warrior'
-    wizard = 3, 'Wizard'
+    robber = 1
+    warrior = 2
+    wizard = 3
 
 
 class Enemy:
@@ -111,12 +111,16 @@ class Inputs:
         if i.upper() == START_EXIT_KEY_WORDS['exit']:
             raise KeyboardInterrupt
 
+    select_string = SELECT_STRiNG+', '.join(' for '.join(map(str, (i.value, i.name))) for i in Attacks)
+
     @staticmethod
-    def select_player_attack(string=SELECT_STRiNG.format(*A.values())):
+    def select_player_attack(string=select_string):
         while True:
             i = input(string)
+            if not i:
+                i = '1'
             if i.isdigit():
                 i = int(i)
-            if i in A:
+            if i in [a.value for a in Attacks]:
                 return i
             print(WRONG_SELECT)

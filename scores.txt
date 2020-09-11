@@ -1,1 +1,5 @@
 cyr: 26
+cyr: 35
+cyr: 19
+cyr: 29
+beaver: 19

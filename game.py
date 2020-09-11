@@ -1,7 +1,6 @@
 from exceptions import GameOver, EnemyDown
 from models import Enemy, Player, Inputs
-
-from settings import LIVES, V_SCORE, GOODBYE_STRING
+from settings import LIVES, V_SCORE, GOODBYE_STRING, ENEMY_DOWN_STRING, LIVES_STRING
 
 
 def play():
@@ -25,6 +24,8 @@ def play():
             level += 1
             enemy = Enemy(level)
             player.score += V_SCORE
+            print(ENEMY_DOWN_STRING, player.score)
+            print(LIVES_STRING, player.lives)
             continue
         player.defence(enemy)
 
@@ -36,8 +37,7 @@ if __name__ == '__main__':
         pass
 
     except KeyboardInterrupt:
-        print(GOODBYE_STRING)
-        raise
+        pass
     finally:
         print(GOODBYE_STRING)
     pass

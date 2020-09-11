@@ -1,23 +1,29 @@
 from sys import exit
-from settings import WELCOME_STRING, START_STRING, START_EXIT_KEY_WORDS, GOODBYE_STRING
+from random import randint
+from exceptions import EnemyDown, GameOver
+from settings import WELCOME_STRING, START_STRING, START_EXIT_KEY_WORDS, GOODBYE_STRING, SELECT_PLAYER_ATTACK as A
+from settings import WRONG_SELECT, SELECT_STRiNG, ATTACK_STRING, DEFENSE_STRING, GAME_OVER_STRING, LIVES_STRING
 
 
 class Enemy:
     """- свойства - level, lives.
     - конструктор принимает уровень. Уровень жизней противнка = уровень противника."""
+
     def __init__(self, level):
         self.level = level
         self.lives = level
 
     @staticmethod
     def select_attack():
-        """возвращает случайное число от одного до трёх."""
-        pass
+        """returns a random number between one and three"""
+        return randint(1, 3)
 
     def decrease_lives(self):
         """уменьшает количество жизней. Когда жизней становится 0 вызывает
         исключение EnemyDown."""
-        pass
+        self.lives -= 1
+        if not self.lives:
+            raise EnemyDown
 
 
 class Player:
@@ -37,12 +43,28 @@ class Player:
         -1 если атака неуспешна,
         1 если атака успешна.
         """
-    pass
+        # draw
+        if attack == defense:
+            return 0
+        # lose
+        if attack == 1 and defense == 2 or \
+           attack == 2 and defense == 3 or \
+           attack == 3 and defense == 1:
+            return -1
+        # won
+        if attack == 2 and defense == 1 or \
+           attack == 3 and defense == 2 or \
+           attack == 1 and defense == 3:
+            return 1
 
     def decrease_lives(self):
         """- то  же, что и Enemy.decrease_lives(), вызывает исключение
             GameOver."""
-        pass
+        self.lives -= 1
+        if not self.lives:
+            print(GAME_OVER_STRING, self.score)
+            print(LIVES_STRING, self.lives)
+            raise GameOver
 
     def attack(self, enemy_obj):
         """- получает ввод от пользователя(1, 2, 3), выбирает
@@ -51,13 +73,22 @@ class Player:
             Если результат боя 0 - вывести "It's a draw!",
             если 1 = "You attacked successfully!" и уменьшает количество жизней противника на 1,
             если - 1 = "You missed!"""
-        pass
+        my_choice = Inputs.select_player_attack()
+        result = self.fight(my_choice, enemy_obj.select_attack())
+        print(ATTACK_STRING[result])
+        if result == 1:
+            enemy_obj.decrease_lives()
+            self.score += 1
 
     def defence(self, enemy_obj):
         """- то же самое, что и метод attack(),
         только в метод fight первым передается атака противника,
         и при удачной атаке противника вызывается метод decrease_lives игрока."""
-        pass
+        my_choice = Inputs.select_player_attack()
+        result = self.fight(enemy_obj.select_attack(), my_choice)
+        print(DEFENSE_STRING[result])
+        if result == 1:
+            self.decrease_lives()
 
 
 class Inputs:
@@ -74,3 +105,13 @@ class Inputs:
         if i == START_EXIT_KEY_WORDS['exit']:
             print(GOODBYE_STRING)
             exit()
+
+    @staticmethod
+    def select_player_attack(string=SELECT_STRiNG.format(*A.values())):
+        while True:
+            i = input(string)
+            if i.isdigit():
+                i = int(i)
+            if i in A:
+                return i
+            print(WRONG_SELECT)

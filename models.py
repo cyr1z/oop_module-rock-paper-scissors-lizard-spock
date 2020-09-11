@@ -70,7 +70,7 @@ class Player:
         if not self.lives:
             print(GAME_OVER_STRING, self.score)
             print(LIVES_STRING, self.lives)
-            raise GameOver(self)
+            raise GameOver
 
     def attack(self, enemy_obj):
         """- получает ввод от пользователя(1, 2, 3), выбирает

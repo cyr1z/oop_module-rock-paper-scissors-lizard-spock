@@ -3,3 +3,7 @@ cyr: 35
 cyr: 19
 cyr: 29
 beaver: 19
+beaver3: 13
+beaverz: 26
+beaver14: 29
+111: 27

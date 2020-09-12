@@ -1,1 +1,4 @@
-cyr: 20
+cyr: 29
+red: 36
+deadpool: 29
+bobby: 27

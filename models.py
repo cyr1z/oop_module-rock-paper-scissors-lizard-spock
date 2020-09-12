@@ -19,6 +19,10 @@ class Attacks(Enum):
     def __str__(self):
         return f'{self.value} for {self.name}'
 
+    @classmethod
+    def full_string(cls):
+        return ', '.join(str(i) for i in cls.__iter__())
+
 
 class Enemy:
     """
@@ -141,7 +145,7 @@ class Inputs:
 
     # string collected Attacks names and numbers
     # for the player select one of them
-    select_string = f'{SELECT_STRING} {", ".join(str(i) for i in Attacks)}: '
+    select_string = f'{SELECT_STRING} {Attacks.full_string()}: '
 
     @staticmethod
     def select_player_attack(string=select_string):
@@ -155,3 +159,37 @@ class Inputs:
             if i in [a.value for a in Attacks]:
                 return i
             print(WRONG_SELECT)
+
+
+class Scores(dict):
+    """scores dict with file read/write methods and __str__ """
+    def read_from_file(self, score_file):
+        """
+        Read scores from file.
+        :param score_file: file name
+        :return: nothing. Only get items to internal dictionary.
+        """
+        with open(score_file, "r") as score_file:
+            scores_string = score_file.readlines()
+            for i in scores_string:
+                i = i.strip().split(': ')
+                self[i[0]] = int(i[1])
+
+    def new_result(self, player: Player, score_file):
+        """
+        working with new score result
+        :param player: Player object having 'name' and 'score' parameters
+        :param score_file: file name
+        :return: nothing/ renew score file and internal dictionary
+        """
+        if player.name not in self:
+            with open(score_file, "a") as s_file:
+                s_file.write(f'{player.name}: {player.score}\n')
+        elif self[player.name] < player.score:
+            with open(score_file, "w") as s_file:
+                self[player.name] = player.score
+                for key, value in self.items():
+                    s_file.write(f'{key}: {value}\n')
+
+    def __str__(self):
+        return '\n'.join(f'{key}: {value}' for key, value in self.items())

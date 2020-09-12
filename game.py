@@ -3,7 +3,7 @@
 main game module
 """
 from exceptions import GameOver, EnemyDown
-from models import Enemy, Player, Inputs
+from models import Enemy, Player, Inputs, Scores
 from settings import LIVES, ENEMY_DOWN_SCORE, GOODBYE_STRING, \
     ENEMY_DOWN_STRING, LIVES_STRING, SCORE_FILE
 
@@ -37,25 +37,14 @@ def play():
             continue
 
         except GameOver:
-            scores = {}
+            scores = Scores()
             # read scores from file
             try:
-                with open(SCORE_FILE, "r") as score_file:
-                    scores_string = score_file.readlines()
-                    for i in scores_string:
-                        i = i.strip().split(': ')
-                        scores[i[0]] = int(i[1])
+                scores.read_from_file(SCORE_FILE)
             except FileNotFoundError:
                 pass
             # write score to scores file
-            if player.name not in scores:
-                with open(SCORE_FILE, "a") as score_file:
-                    score_file.write(f'{player.name}: {player.score}\n')
-            elif scores[player.name] < player.score:
-                with open(SCORE_FILE, "w") as score_file:
-                    scores[player.name] = player.score
-                    for key, value in scores.items():
-                        score_file.write(f'{key}: {value}\n')
+            scores.new_result(player, SCORE_FILE)
             raise GameOver
 
 

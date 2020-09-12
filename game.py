@@ -1,17 +1,23 @@
+
+"""
+main game module
+"""
 from exceptions import GameOver, EnemyDown
 from models import Enemy, Player, Inputs
-from settings import LIVES, ENEMY_DOWN_SCORE, GOODBYE_STRING, ENEMY_DOWN_STRING, LIVES_STRING, SCORE_FILE
+from settings import LIVES, ENEMY_DOWN_SCORE, GOODBYE_STRING, \
+    ENEMY_DOWN_STRING, LIVES_STRING, SCORE_FILE
 
 
 def play():
     """
-    - Ввод имени игрока
-    - Создание объекта player
-    - level = 1
-    - Создание объекта enemy
-    - в бесконечном цикле вызывает методы attack и defense объекта player
-    - при возникновении исключения EnemyDown повышает уровень игры, создает новый объект Enemy с
-    новым уровнем, добавляет игроку +5 очков."""
+    - Entering the player's name
+    - Creating a player object - level = 1
+    - Creating an enemy object
+    - calls the attack and defense
+      methods of the player object in an endless loop
+    - when an exception occurs, EnemyDown raises the game level,
+      creates a new Enemy object with a new level,
+      adds +5 points to the player."""
     level = 1
     player = Player(Inputs.input_player_name(), LIVES)
     Inputs.input_start()
@@ -21,6 +27,7 @@ def play():
         try:
             player.attack(enemy)
             player.defence(enemy)
+
         except EnemyDown:
             level += 1
             enemy = Enemy(level)
@@ -28,6 +35,7 @@ def play():
             print(ENEMY_DOWN_STRING, player.score)
             print(LIVES_STRING, player.lives)
             continue
+
         except GameOver:
             with open(SCORE_FILE, "a") as score_file:
                 score_file.write(f'{player.name}: {player.score}\n')
@@ -39,9 +47,7 @@ if __name__ == '__main__':
         play()
     except GameOver:
         pass
-
     except KeyboardInterrupt:
         pass
     finally:
         print(GOODBYE_STRING)
-    pass

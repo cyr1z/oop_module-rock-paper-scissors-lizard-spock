@@ -1,6 +1,11 @@
+"""
+Exceptions for Game over and Enemy down
+"""
+
+
 class GameOver(Exception):
-    pass
+    """ Game over exception"""
 
 
 class EnemyDown(Exception):
-    pass
+    """Enemy down exception"""

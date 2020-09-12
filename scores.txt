@@ -7,3 +7,9 @@ beaver3: 13
 beaverz: 26
 beaver14: 29
 111: 27
+debil eden: 18
+ff: 13
+cyr: 28
+cyr: 36
+cyr: 26
+cyr: 40

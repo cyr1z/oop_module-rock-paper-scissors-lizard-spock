@@ -1,4 +1,1 @@
-cyr: 29
-beaver: 28
-dd: 29
-bad: 28
+cyr: 20

@@ -37,23 +37,25 @@ def play():
             continue
 
         except GameOver:
-            with open(SCORE_FILE, "r") as score_file:
-                scores_string = score_file.readlines()
-                scores = {}
-                for i in scores_string:
-                    i = i.strip().split(': ')
-                    scores[i[0]] = int(i[1])
-
+            scores = {}
+            # read scores from file
+            try:
+                with open(SCORE_FILE, "r") as score_file:
+                    scores_string = score_file.readlines()
+                    for i in scores_string:
+                        i = i.strip().split(': ')
+                        scores[i[0]] = int(i[1])
+            except FileNotFoundError:
+                pass
+            # write score to scores file
             if player.name not in scores:
                 with open(SCORE_FILE, "a") as score_file:
-                    # write score to scores file
                     score_file.write(f'{player.name}: {player.score}\n')
             elif scores[player.name] < player.score:
                 with open(SCORE_FILE, "w") as score_file:
                     scores[player.name] = player.score
                     for key, value in scores.items():
                         score_file.write(f'{key}: {value}\n')
-
             raise GameOver
 
 

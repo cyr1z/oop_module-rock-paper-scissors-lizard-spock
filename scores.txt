@@ -1,4 +1,5 @@
-cyr: 29
 red: 36
+cyr: 29
 deadpool: 29
+baddy: 29
 bobby: 27

@@ -7,7 +7,7 @@ from random import randint
 from exceptions import EnemyDown, GameOver
 from settings import WELCOME_STRING, START_STRING, COMMANDS,\
     WRONG_SELECT, SELECT_STRING, ATTACK_STRINGS, DEFENSE_STRINGS,\
-    GAME_OVER_STRING, LIVES_STRING
+    GAME_OVER_STRING, LIVES_STRING, AVAILABLE_COMMANDS, SCORE_FILE
 
 
 class Attacks(Enum):
@@ -21,6 +21,7 @@ class Attacks(Enum):
 
     @classmethod
     def full_string(cls):
+        """returns string with all Enum items"""
         return ', '.join(str(i) for i in cls.__iter__())
 
 
@@ -134,14 +135,23 @@ class Inputs:
         """player name input"""
         return input(string)
 
-    @staticmethod
-    def input_start(string=START_STRING):
+    @classmethod
+    def input_start(cls, string=START_STRING):
         """input the command 'start' or 'exit'"""
         command = ''
         while command.lower() not in COMMANDS.values():
             command = input(string).strip()
         if command.lower() == COMMANDS['exit']:
             raise KeyboardInterrupt
+        if command.lower() == COMMANDS['help']:
+            print(AVAILABLE_COMMANDS)
+            print(*COMMANDS.values(), sep=', ')
+            cls.input_start()
+        if command.lower() == COMMANDS['scores']:
+            scores = Scores()
+            scores.read_from_file(SCORE_FILE)
+            print(scores)
+            cls.input_start()
 
     # string collected Attacks names and numbers
     # for the player select one of them
@@ -169,11 +179,15 @@ class Scores(dict):
         :param score_file: file name
         :return: nothing. Only get items to internal dictionary.
         """
-        with open(score_file, "r") as score_file:
-            scores_string = score_file.readlines()
+        with open(score_file, "r") as s_file:
+            scores_string = s_file.readlines()
             for i in scores_string:
                 i = i.strip().split(': ')
                 self[i[0]] = int(i[1])
+
+    def sorted(self):
+        """return sorted scores"""
+        return sorted(self.items(), key=lambda x: x[1], reverse=True)
 
     def new_result(self, player: Player, score_file):
         """
@@ -183,13 +197,14 @@ class Scores(dict):
         :return: nothing/ renew score file and internal dictionary
         """
         if player.name not in self:
+            self[player.name] = player.score
             with open(score_file, "a") as s_file:
                 s_file.write(f'{player.name}: {player.score}\n')
         elif self[player.name] < player.score:
+            self[player.name] = player.score
             with open(score_file, "w") as s_file:
-                self[player.name] = player.score
-                for key, value in self.items():
+                for key, value in self.sorted():
                     s_file.write(f'{key}: {value}\n')
 
     def __str__(self):
-        return '\n'.join(f'{key}: {value}' for key, value in self.items())
+        return '\n'.join(f'{key}: {value}' for key, value in self.sorted())

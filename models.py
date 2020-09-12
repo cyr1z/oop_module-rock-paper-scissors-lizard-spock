@@ -135,7 +135,7 @@ class Inputs:
 
     # string collected Attacks names and numbers
     # for the player select one of them
-    select_string = SELECT_STRING + ', '.join(str(i) for i in Attacks)
+    select_string = f'{SELECT_STRING} {", ".join(str(i) for i in Attacks)}: '
 
     @staticmethod
     def select_player_attack(string=select_string):

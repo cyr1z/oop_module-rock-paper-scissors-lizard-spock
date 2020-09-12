@@ -21,10 +21,11 @@ class Attacks(Enum):
 
 
 class Enemy:
-    """- properties - level, lives.
+    """
+    - properties - level, lives.
     - the constructor takes the level.
-    Opponent's health level = opponent's level."""
-
+    Opponent's health level = opponent's level.
+    """
     def __init__(self, level):
         self.level = level
         self.lives = level
@@ -35,8 +36,10 @@ class Enemy:
         return randint(1, 3)
 
     def decrease_lives(self):
-        """reduces the number of lives.
-        Raises an EnemyDown exception when lives become 0."""
+        """
+        reduces the number of lives.
+        Raises an EnemyDown exception when lives become 0.
+        """
         self.lives -= 1
         if not self.lives:
             raise EnemyDown
@@ -78,8 +81,10 @@ class Player:
         return 1
 
     def decrease_lives(self):
-        """- same as Enemy.decrease_lives (),
-        throws GameOver exception."""
+        """
+        - same as Enemy.decrease_lives (),
+        throws GameOver exception.
+        """
         self.lives -= 1
         if not self.lives:
             print(GAME_OVER_STRING, self.score)
@@ -109,7 +114,8 @@ class Player:
         - the same as the attack () method,
         only the opponent's attack is passed to the fight method first,
         and if the opponent's attack is successful,
-        the player's decrease_lives method is called."""
+        the player's decrease_lives method is called.
+        """
         my_choice = Inputs.select_player_attack()
         result = self.fight(enemy_obj.select_attack(), my_choice)
         print(DEFENSE_STRINGS[result])

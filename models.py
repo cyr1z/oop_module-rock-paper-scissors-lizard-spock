@@ -137,17 +137,17 @@ class Inputs:
 
     @classmethod
     def input_start(cls, string=START_STRING):
-        """input the command 'start' or 'exit'"""
+        """input the command 'start', 'help', 'scores' or 'exit'"""
         command = ''
-        while command.lower() not in COMMANDS.values():
-            command = input(string).strip()
-        if command.lower() == COMMANDS['exit']:
+        while command not in COMMANDS.values():
+            command = input(string).strip().lower()
+        if command == COMMANDS['exit']:
             raise KeyboardInterrupt
-        if command.lower() == COMMANDS['help']:
+        if command == COMMANDS['help']:
             print(AVAILABLE_COMMANDS)
             print(*COMMANDS.values(), sep=', ')
             cls.input_start()
-        if command.lower() == COMMANDS['scores']:
+        if command == COMMANDS['scores']:
             scores = Scores()
             scores.read_from_file(SCORE_FILE)
             print(scores)

@@ -3,3 +3,4 @@ cyr: 29
 deadpool: 29
 baddy: 29
 bobby: 27
+cR: 28

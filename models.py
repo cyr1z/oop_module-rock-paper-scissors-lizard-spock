@@ -3,10 +3,10 @@ Basic models and classes for the player, types of attacks, enemies,
 and a class in which user input methods
 """
 from enum import Enum
-from random import randint
+from random import choice
 from exceptions import EnemyDown, GameOver
-from settings import WELCOME_STRING, START_STRING, COMMANDS,\
-    WRONG_SELECT, SELECT_STRING, ATTACK_STRINGS, DEFENSE_STRINGS,\
+from settings import WELCOME_STRING, START_STRING, COMMANDS, \
+    WRONG_SELECT, SELECT_STRING, ATTACK_STRINGS, DEFENSE_STRINGS, \
     GAME_OVER_STRING, LIVES_STRING, AVAILABLE_COMMANDS, SCORE_FILE
 
 
@@ -22,7 +22,12 @@ class Attacks(Enum):
     @classmethod
     def full_string(cls):
         """returns string with all Enum items"""
-        return ', '.join(str(i) for i in cls.__iter__())
+        return ', '.join(str(i) for i in cls)
+
+    @classmethod
+    def numbers(cls):
+        """returns list with all attack numbers"""
+        return [i.value for i in cls]
 
 
 class Enemy:
@@ -31,14 +36,14 @@ class Enemy:
     - the constructor takes the level.
     Opponent's health level = opponent's level.
     """
+
     def __init__(self, level):
-        self.level = level
         self.lives = level
 
     @staticmethod
     def select_attack():
         """returns a random number between one and three"""
-        return randint(1, 3)
+        return choice(Attacks.numbers())
 
     def decrease_lives(self):
         """
@@ -57,6 +62,7 @@ class Player:
     :param name: Player name
     :param lives: How many lives at start Player has
     """
+
     def __init__(self, name, lives):
         self.score = 0
         self.name = name
@@ -72,6 +78,10 @@ class Player:
                 -1 if the attack is unsuccessful,
                 1 if the attack is successful.
         """
+        if attack not in Attacks.numbers():
+            raise ValueError('Wrong attack number')
+        if defense not in Attacks.numbers():
+            raise ValueError('Wrong defense number')
         # draw
         if attack == defense:
             return 0
@@ -130,6 +140,7 @@ class Player:
 
 class Inputs:
     """class in which user input methods"""
+
     @staticmethod
     def input_player_name(string=WELCOME_STRING):
         """player name input"""
@@ -166,13 +177,14 @@ class Inputs:
                 i = '1'
             if i.isdigit():
                 i = int(i)
-            if i in [a.value for a in Attacks]:
+            if i in Attacks.numbers():
                 return i
-            print(WRONG_SELECT)
+            print(WRONG_SELECT, ', '.join(Attacks.numbers()))
 
 
 class Scores(dict):
     """scores dict with file read/write methods and __str__ """
+
     def read_from_file(self, score_file):
         """
         Read scores from file.

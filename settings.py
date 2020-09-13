@@ -6,11 +6,11 @@ ENEMY_DOWN_SCORE = 5
 SCORE_FILE = 'scores.txt'
 WELCOME_STRING = 'Enter your name: '
 GOODBYE_STRING = 'Good bye!'
-START_STRING = 'Enter "start" for play, "help"  for view available commands,' \
+START_STRING = 'Enter "start" for play, "help" for view available commands,' \
                '"scores" for view best scores or "exit" for exit: '
 AVAILABLE_COMMANDS = 'Available commands: '
 SELECT_STRING = 'Select your champion. Enter '
-WRONG_SELECT = 'Wrong select. Enter the 1, 2 or 3'
+WRONG_SELECT = 'Wrong select. Enter one of this numbers: '
 ENEMY_DOWN_STRING = "Enemy falling down! Your score is"
 LIVES_STRING = "Your Lives is "
 GAME_OVER_STRING = "Game over. Your score is "

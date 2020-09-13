@@ -181,7 +181,7 @@ class Inputs:
             if i in Attacks.numbers():
                 print(YOUR_CHOISE, Attacks(i).name)
                 return i
-            print(WRONG_SELECT, ', '.join(Attacks.numbers()))
+            print(WRONG_SELECT, *Attacks.numbers())
 
 
 class Scores(dict):

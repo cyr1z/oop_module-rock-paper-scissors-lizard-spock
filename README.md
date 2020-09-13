@@ -1,4 +1,4 @@
 # A-Level OOP module
-Create an interactive rock-paper-scissors game on the console. 
-
+Create an interactive rock-paper-scissors-lizard-spock game on the console. 
+![ock-paper-scissors-lizard-spock game](hhttps://interesko.info/ava/wp-content/uploads/2012/03/kamen-nozhn-bum9.jpg)
 The pylint score is at least 8.

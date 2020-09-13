@@ -5,16 +5,19 @@ and a class in which user input methods
 from enum import Enum
 from random import choice
 from exceptions import EnemyDown, GameOver
-from settings import WELCOME_STRING, START_STRING, COMMANDS, \
-    WRONG_SELECT, SELECT_STRING, ATTACK_STRINGS, DEFENSE_STRINGS, \
-    GAME_OVER_STRING, LIVES_STRING, AVAILABLE_COMMANDS, SCORE_FILE
+from settings import WELCOME_STRING, START_STRING, COMMANDS, ENEMY_CHOISE, \
+    WRONG_SELECT, SELECT_STRING, ATTACK_STRINGS, DEFENSE_STRINGS, LOSES, \
+    GAME_OVER_STRING, LIVES_STRING, AVAILABLE_COMMANDS, SCORE_FILE,\
+    YOUR_CHOISE
 
 
 class Attacks(Enum):
     """Enum for attacks methods"""
-    robber = 1
-    warrior = 2
-    wizard = 3
+    rock = 1
+    paper = 2
+    scissors = 3
+    lizard = 4
+    spock = 5
 
     def __str__(self):
         return f'{self.value} for {self.name}'
@@ -43,7 +46,9 @@ class Enemy:
     @staticmethod
     def select_attack():
         """returns a random number between one and three"""
-        return choice(Attacks.numbers())
+        enemy_choice = choice(list(Attacks))
+        print(ENEMY_CHOISE, enemy_choice.name)
+        return enemy_choice.value
 
     def decrease_lives(self):
         """
@@ -86,11 +91,7 @@ class Player:
         if attack == defense:
             return 0
         # lose
-        if attack == 1 and defense == 2:
-            return -1
-        if attack == 2 and defense == 3:
-            return -1
-        if attack == 3 and defense == 1:
+        if attack in LOSES and defense in LOSES[attack]:
             return -1
         # won
         return 1
@@ -178,6 +179,7 @@ class Inputs:
             if i.isdigit():
                 i = int(i)
             if i in Attacks.numbers():
+                print(YOUR_CHOISE, Attacks(i).name)
                 return i
             print(WRONG_SELECT, ', '.join(Attacks.numbers()))
 

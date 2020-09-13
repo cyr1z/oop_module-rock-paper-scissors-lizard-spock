@@ -4,3 +4,5 @@ deadpool: 29
 baddy: 29
 cR: 28
 bobby: 27
+CYR: 35
+vujko: 21

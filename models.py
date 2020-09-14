@@ -5,8 +5,8 @@ and a class in which user input methods
 from enum import Enum
 from random import choice
 from exceptions import EnemyDown, GameOver
-from settings import WELCOME_STRING, START_STRING, YOUR_CHOISE, ENEMY_CHOISE,\
-    WRONG_SELECT, SELECT_STRING, ATTACK_STRINGS, DEFENSE_STRINGS, COMMANDS,\
+from settings import WELCOME_STRING, START_STRING, YOUR_CHOISE, ENEMY_CHOISE, \
+    WRONG_SELECT, SELECT_STRING, ATTACK_STRINGS, DEFENSE_STRINGS, COMMANDS, \
     GAME_OVER_STRING, LIVES_STRING, AVAILABLE_COMMANDS, SCORE_FILE
 
 

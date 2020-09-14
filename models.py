@@ -11,7 +11,12 @@ from settings import WELCOME_STRING, START_STRING, YOUR_CHOISE, ENEMY_CHOISE, \
 
 
 class Attacks(Enum):
-    """Enum for attacks methods"""
+    """
+    Enum for attacks methods
+    name = (value, lose)
+    where lose are the numbers of attacks that this attack loses
+    """
+
     rock = (1, (2, 5))
     paper = (2, (3, 4))
     scissors = (3, (1, 5))
@@ -22,6 +27,8 @@ class Attacks(Enum):
         obj = object.__new__(cls)
         # first value is canonical value
         obj._value_ = values[0]
+        # second value is tuple with numbers of attacks
+        # that this attack loses
         obj.lose = values[1]
         obj._all_values = values
         return obj
@@ -53,9 +60,9 @@ class Enemy:
     @staticmethod
     def select_attack():
         """returns a random number between one and three"""
-        enemy_choice = choice(list(Attacks))
-        print(ENEMY_CHOISE, enemy_choice.name)
-        return enemy_choice.value
+        enemy_choice = choice(Attacks.numbers())
+        print(ENEMY_CHOISE, Attacks(enemy_choice).name)
+        return enemy_choice
 
     def decrease_lives(self):
         """

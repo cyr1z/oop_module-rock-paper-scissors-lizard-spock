@@ -5,6 +5,7 @@ and a class in which user input methods
 from enum import Enum
 from random import choice
 from exceptions import EnemyDown, GameOver
+from color import cli_color
 from settings import WELCOME_STRING, START_STRING, YOUR_CHOISE, ENEMY_CHOISE, \
     WRONG_SELECT, SELECT_STRING, ATTACK_STRINGS, DEFENSE_STRINGS, COMMANDS, \
     GAME_OVER_STRING, LIVES_STRING, AVAILABLE_COMMANDS, SCORE_FILE
@@ -115,10 +116,13 @@ class Player:
         - same as Enemy.decrease_lives (),
         throws GameOver exception.
         """
+        lives_color = 'g'
         self.lives -= 1
         if not self.lives:
-            print(GAME_OVER_STRING, self.score)
-            print(LIVES_STRING, self.lives)
+            lives_color = 'r'
+        print(cli_color(f'{LIVES_STRING} {self.lives}', lives_color))
+        if not self.lives:
+            print(cli_color(f'{GAME_OVER_STRING} {self.score}', 'y'))
             raise GameOver
 
     def attack(self, enemy_obj: Enemy):
@@ -195,7 +199,8 @@ class Inputs:
             if i in Attacks.numbers():
                 print(YOUR_CHOISE, Attacks(i).name)
                 return i
-            print(WRONG_SELECT, *Attacks.numbers())
+            print(cli_color(WRONG_SELECT, 'r'), end=' ')
+            print(*Attacks.numbers())
 
 
 class Scores(dict):

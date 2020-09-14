@@ -3,6 +3,7 @@ main game module
 """
 from exceptions import GameOver, EnemyDown
 from models import Enemy, Player, Inputs, Scores
+from color import cli_color
 from settings import LIVES, ENEMY_DOWN_SCORE, GOODBYE_STRING, \
     ENEMY_DOWN_STRING, LIVES_STRING, SCORE_FILE
 
@@ -31,7 +32,7 @@ def play():
             level += 1
             enemy = Enemy(level)
             player.score += ENEMY_DOWN_SCORE
-            print(ENEMY_DOWN_STRING, player.score)
+            print(cli_color(f'{ENEMY_DOWN_STRING} {player.score}', 'c'))
             print(LIVES_STRING, player.lives)
             continue
 

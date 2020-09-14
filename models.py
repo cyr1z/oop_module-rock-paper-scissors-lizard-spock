@@ -5,19 +5,26 @@ and a class in which user input methods
 from enum import Enum
 from random import choice
 from exceptions import EnemyDown, GameOver
-from settings import WELCOME_STRING, START_STRING, COMMANDS, ENEMY_CHOISE, \
-    WRONG_SELECT, SELECT_STRING, ATTACK_STRINGS, DEFENSE_STRINGS, LOSES, \
-    GAME_OVER_STRING, LIVES_STRING, AVAILABLE_COMMANDS, SCORE_FILE,\
-    YOUR_CHOISE
+from settings import WELCOME_STRING, START_STRING, YOUR_CHOISE, ENEMY_CHOISE,\
+    WRONG_SELECT, SELECT_STRING, ATTACK_STRINGS, DEFENSE_STRINGS, COMMANDS,\
+    GAME_OVER_STRING, LIVES_STRING, AVAILABLE_COMMANDS, SCORE_FILE
 
 
 class Attacks(Enum):
     """Enum for attacks methods"""
-    rock = 1
-    paper = 2
-    scissors = 3
-    lizard = 4
-    spock = 5
+    rock = (1, (2, 5))
+    paper = (2, (3, 4))
+    scissors = (3, (1, 5))
+    lizard = (4, (1, 3))
+    spock = (5, (2, 4))
+
+    def __new__(cls, *values):
+        obj = object.__new__(cls)
+        # first value is canonical value
+        obj._value_ = values[0]
+        obj.lose = values[1]
+        obj._all_values = values
+        return obj
 
     def __str__(self):
         return f'{self.value} for {self.name}'
@@ -91,7 +98,7 @@ class Player:
         if attack == defense:
             return 0
         # lose
-        if attack in LOSES and defense in LOSES[attack]:
+        if defense in Attacks(attack).lose:
             return -1
         # won
         return 1

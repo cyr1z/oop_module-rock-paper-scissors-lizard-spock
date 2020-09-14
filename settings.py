@@ -16,13 +16,6 @@ LIVES_STRING = "Your Lives is "
 GAME_OVER_STRING = "Game over. Your score is "
 ENEMY_CHOISE = "Enemy show "
 YOUR_CHOISE = "You show "
-LOSES = {
-    1: (2, 5),
-    2: (3, 4),
-    3: (1, 5),
-    4: (1, 3),
-    5: (2, 4),
-}
 ATTACK_STRINGS = {
     -1: "You missed!",
     0: "It's a draw!",

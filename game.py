@@ -34,7 +34,6 @@ def play():
             player.score += ENEMY_DOWN_SCORE
             print(cli_color(f'{ENEMY_DOWN_STRING} {player.score}', 'c'))
             print(LIVES_STRING, player.lives)
-            continue
 
         except GameOver:
             scores = Scores()

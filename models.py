@@ -214,9 +214,11 @@ class Scores(dict):
         """
         with open(score_file, "r") as s_file:
             scores_string = s_file.readlines()
-            for i in scores_string:
-                i = i.strip().split(': ')
-                self[i[0]] = int(i[1])
+            for line in scores_string:
+                item = line.strip().split(': ')
+                if not item[1].isdigit():
+                    continue
+                self[item[0]] = int(item[1])
 
     def sorted(self):
         """return sorted scores"""
